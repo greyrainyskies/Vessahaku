@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NetTopologySuite.Geometries;
 using VessahakuAPI.Models;
+using OsoiteGPS;
 
 namespace VessahakuAPI.Controllers
 {
@@ -46,16 +47,33 @@ namespace VessahakuAPI.Controllers
 
             return a;
         }
-
-
-        // POST: api/Vessa
-        [HttpPost]
-        public void LisääWC([FromBody] Wct wc)
+        public IActionResult LisääWC([FromBody] Wct wc)
         {
-            int tid = db.Wct.Max(p => p.WcId + 1);
-            wc.WcId = tid;
-            db.Add(wc);
-            db.SaveChanges();
+            try
+            {
+                var uusi = new Wct();
+                uusi.Nimi = wc.Nimi;
+                uusi.Katuosoite = wc.Katuosoite;
+                uusi.Postinro = wc.Postinro;
+                uusi.Kaupunki = wc.Kaupunki;
+                var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
+                uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
+                uusi.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
+                uusi.Sijainti = sijainti;
+                uusi.Ilmainen = wc.Ilmainen;
+                uusi.Unisex = wc.Unisex;
+                uusi.Saavutettava = wc.Saavutettava;
+                uusi.Aukioloajat = wc.Aukioloajat;
+                uusi.Koodi = wc.Koodi;
+                uusi.Ohjeet = wc.Ohjeet;
+                db.Wct.Add(uusi);
+                db.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { error = e.Message });
+            }
         }
 
         // PUT: api/Vessa/5
