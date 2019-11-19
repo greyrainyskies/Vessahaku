@@ -44,12 +44,29 @@ namespace VessahakuAPI.Controllers
             var a = db.Wct.Where(s => s.Postinro.Contains(pnro)).ToList();
             return a;
         }
+
         [HttpGet("Haku/{longi}/{lat}", Name = "Hakuetäisyydellä")]
         public IEnumerable<Wct> Getpnrolla(decimal longi, decimal lat)
         {
             Coordinate c = new Coordinate(Convert.ToDouble(longi), Convert.ToDouble(lat));
             var a = db.Wct.OrderBy(s => s.Sijainti.Distance(new Point(c) { SRID = 4326 })).ToList();
 
+            return a;
+        }
+
+        [HttpGet("Lahimmat/{lat}/{lon}", Name = "Lähimmät sijainnista")]
+        public IEnumerable<Wct> LähimmätSijainnista(double lat, double lon)
+        {
+            var c = new Coordinate(lon, lat);
+            var a = db.Wct.OrderBy(wc => wc.Sijainti.Distance(new Point(c) { SRID = 4326 })).ToList();
+            return a;
+        }
+
+        [HttpGet("Lahimmat/{paikka}", Name = "Lähimmät paikasta")]
+        public IEnumerable<Wct> LähimmätPaikasta(string paikka)
+        {
+            var sijainti = Osoite.Haku(paikka);
+            var a = db.Wct.OrderBy(wc => wc.Sijainti.Distance(sijainti)).ToList();
             return a;
         }
 
