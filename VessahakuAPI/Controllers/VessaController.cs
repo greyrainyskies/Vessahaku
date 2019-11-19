@@ -19,7 +19,7 @@ namespace VessahakuAPI.Controllers
         [HttpGet]
         public IEnumerable<Wct> Get()
         {
-            
+
             var vessat = from a in db.Wct
                          select a;
 
@@ -28,7 +28,7 @@ namespace VessahakuAPI.Controllers
         [HttpGet("Tiedot/{id}", Name = "HakuID")]
         public Wct GetIdllä(int id)
         {
-             return db.Wct.Find(id);
+            return db.Wct.Find(id);
         }
         // GET: api/Vessa/5
         [HttpGet("Haku/{nimi}", Name = "Haku")]
@@ -95,10 +95,10 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var uusi = new Wct();
-                uusi.Nimi = wc.Nimi.Trim();
-                uusi.Katuosoite = wc.Katuosoite.Trim();
-                uusi.Postinro = wc.Postinro.Trim();
-                uusi.Kaupunki = wc.Kaupunki.Trim();
+                uusi.Nimi = wc.Nimi;
+                uusi.Katuosoite = wc.Katuosoite;
+                uusi.Postinro = wc.Postinro;
+                uusi.Kaupunki = wc.Kaupunki;
                 var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
                 uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 uusi.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
@@ -106,9 +106,9 @@ namespace VessahakuAPI.Controllers
                 uusi.Ilmainen = wc.Ilmainen;
                 uusi.Unisex = wc.Unisex;
                 uusi.Saavutettava = wc.Saavutettava;
-                uusi.Aukioloajat = wc.Aukioloajat.Trim();
-                uusi.Koodi = wc.Koodi.Trim();
-                uusi.Ohjeet = wc.Ohjeet.Trim();
+                uusi.Aukioloajat = wc.Aukioloajat;
+                uusi.Koodi = wc.Koodi;
+                uusi.Ohjeet = wc.Ohjeet;
                 db.Wct.Add(uusi);
                 db.SaveChanges();
                 return Ok();
@@ -145,11 +145,10 @@ namespace VessahakuAPI.Controllers
                 db.SaveChanges();
                 return Ok();
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return BadRequest();
             }
-            
         }
 
         //// DELETE: api/ApiWithActions/5
