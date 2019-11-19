@@ -28,7 +28,7 @@ namespace VessahakuAPI.Models
         public DateTime? Muokattu { get; set; }
         public int? KäyttäjäId { get; set; }
         [JsonIgnore]
-        public Geometry Sijainti { get; set; }
+        internal Geometry Sijainti { get; set; }
         public decimal Lat { get; set; }
         public decimal Long { get; set; }
 
