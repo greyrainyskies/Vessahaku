@@ -7,8 +7,15 @@ namespace OsoiteGPSTestit
     {
         static void Main(string[] args)
         {
-            //Osoite.Haku("Kamppi");
-            Console.WriteLine(Osoite.Haku("Jarrumiehenkatu 2, 00520 Pasila"));
+            try
+            {
+                var piste = Osoite.Haku("Kiasma");
+                Console.WriteLine(piste.Coordinates[0]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
