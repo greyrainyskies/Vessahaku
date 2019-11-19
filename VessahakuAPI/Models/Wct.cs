@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using NetTopologySuite.Geometries;
 
@@ -11,7 +12,7 @@ namespace VessahakuAPI.Models
         {
             Kommentit = new HashSet<Kommentit>();
         }
-
+        [Key]
         public int WcId { get; set; }
         public string Nimi { get; set; }
         public string Kaupunki { get; set; }

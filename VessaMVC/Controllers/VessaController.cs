@@ -1,24 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+
+using VessaMVC.Models;
 
 namespace VessaMVC.Controllers
 {
     public class VessaController : Controller
     {
+        Jsonkäsittely j = new Jsonkäsittely();
         // GET: Vessa
-        public ActionResult Index()
+        public ActionResult TulostaKaikki()
         {
-            return View();
+            
+            string json=j.Jsonhommat();
+            List<Wct> wc;
+            wc = JsonConvert.DeserializeObject<List<Wct>>(json);
+            return View(wc);
+           
         }
 
         // GET: Vessa/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            string json = j.Jsonhommat(id:id, urlinloppu:"tiedot/");
+            Wct wc= JsonConvert.DeserializeObject<Wct>(json);
+            return View(wc);
         }
 
         // GET: Vessa/Create

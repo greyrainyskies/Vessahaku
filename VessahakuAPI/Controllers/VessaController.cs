@@ -24,7 +24,11 @@ namespace VessahakuAPI.Controllers
 
             return vessat.ToList();
         }
-
+        [HttpGet("Tiedot/{id}", Name = "HakuID")]
+        public Wct GetIdllä(int id)
+        {
+             return db.Wct.Find(id);
+        }
         // GET: api/Vessa/5
         [HttpGet("Haku/{nimi}", Name = "Haku")]
         public IEnumerable<Wct> GetNimellä(string nimi)
