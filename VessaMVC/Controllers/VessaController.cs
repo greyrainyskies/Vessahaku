@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using VessaMVC.Models;
+
 
 namespace VessaMVC.Controllers
 {
@@ -22,10 +28,40 @@ namespace VessaMVC.Controllers
         }
 
         // GET: Vessa/Create
-        public ActionResult Create()
+        public ActionResult LisaaWc()
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult LisaaWc(Wct wc)
+        {
+
+            string url = $"https://localhost:44330/api/vessa";
+
+            string body = JsonConvert.SerializeObject(wc);
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new
+                MediaTypeWithQualityHeaderValue("application/json"));
+                var content = new StringContent(body, UTF8Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = client.PostAsync(url, content).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Jotain meni pieleen.");
+                    return View(wc);
+                }
+                 
+
+            }
+        }
+
 
         // POST: Vessa/Create
         [HttpPost]
