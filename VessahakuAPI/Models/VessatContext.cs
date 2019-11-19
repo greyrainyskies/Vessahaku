@@ -33,7 +33,7 @@ namespace VessahakuAPI.Models
             modelBuilder.Entity<Kommentit>(entity =>
             {
                 entity.HasKey(e => e.KommenttiId)
-                    .HasName("PK__Kommenti__7119F6A7A492C776");
+                    .HasName("PK__Kommenti__7119F6A7D95BE809");
 
                 entity.Property(e => e.KommenttiId).HasColumnName("Kommentti_ID");
 
@@ -77,7 +77,7 @@ namespace VessahakuAPI.Models
             modelBuilder.Entity<Wct>(entity =>
             {
                 entity.HasKey(e => e.WcId)
-                    .HasName("PK__WCt__B59F4AC53CE39431");
+                    .HasName("PK__WCt__B59F4AC56B289BD2");
 
                 entity.ToTable("WCt");
 
@@ -97,9 +97,13 @@ namespace VessahakuAPI.Models
 
                 entity.Property(e => e.KäyttäjäId).HasColumnName("Käyttäjä_ID");
 
+                entity.Property(e => e.Lat).HasColumnType("decimal(11, 8)");
+
                 entity.Property(e => e.Lisätty)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.Long).HasColumnType("decimal(11, 8)");
 
                 entity.Property(e => e.Muokattu).HasColumnType("datetime");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using NetTopologySuite.Geometries;
 
 namespace VessahakuAPI.Models
@@ -25,7 +26,10 @@ namespace VessahakuAPI.Models
         public DateTime Lisätty { get; set; }
         public DateTime? Muokattu { get; set; }
         public int? KäyttäjäId { get; set; }
+        [JsonIgnore]
         public Geometry Sijainti { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Long { get; set; }
 
         public virtual ICollection<Kommentit> Kommentit { get; set; }
     }
