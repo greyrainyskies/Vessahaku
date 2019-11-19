@@ -94,25 +94,49 @@ namespace VessahakuAPI.Controllers
                 db.SaveChanges();
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(new { error = e.Message });
+                return BadRequest();
             }
         }
 
         // PUT: api/Vessa/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Wct wc)
+        public IActionResult Put(int id, [FromBody] Wct wc)
         {
-
-            db.Update(wc);
-            db.SaveChanges();
+            try
+            {
+                var muutettava = db.Wct.Find(id);
+                muutettava.Nimi = wc.Nimi;
+                muutettava.Katuosoite = wc.Katuosoite;
+                muutettava.Postinro = wc.Postinro;
+                muutettava.Kaupunki = wc.Kaupunki;
+                var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki);
+                muutettava.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
+                muutettava.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
+                muutettava.Sijainti = sijainti;
+                muutettava.Ilmainen = wc.Ilmainen;
+                muutettava.Unisex = wc.Unisex;
+                muutettava.Saavutettava = wc.Saavutettava;
+                muutettava.Aukioloajat = wc.Aukioloajat;
+                muutettava.Koodi = wc.Koodi;
+                muutettava.Ohjeet = wc.Ohjeet;
+                muutettava.Muokattu = DateTime.Now;
+                db.Update(muutettava);
+                db.SaveChanges();
+                return Ok();
+            }
+            catch (Exception )
+            {
+                return BadRequest();
+            }
+            
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE: api/ApiWithActions/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
