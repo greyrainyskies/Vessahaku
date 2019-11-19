@@ -47,6 +47,8 @@ namespace VessahakuAPI.Controllers
 
             return a;
         }
+
+        [HttpPost]
         public IActionResult LisääWC([FromBody] Wct wc)
         {
             try
