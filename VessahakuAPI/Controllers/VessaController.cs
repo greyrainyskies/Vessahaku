@@ -29,6 +29,7 @@ namespace VessahakuAPI.Controllers
         [HttpGet("Haku/{nimi}", Name = "Haku")]
         public IEnumerable<Wct> GetNimellä(string nimi)
         {
+
             var a = db.Wct.Where(s => s.Nimi.ToLower().Contains(nimi.ToLower())).ToList();
             return a;
         }
