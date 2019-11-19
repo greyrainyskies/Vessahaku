@@ -55,19 +55,38 @@ namespace VessahakuAPI.Controllers
         }
 
         [HttpGet("Lahimmat/{lat}/{lon}", Name = "Lähimmät sijainnista")]
-        public IEnumerable<Wct> LähimmätSijainnista(double lat, double lon)
+        public IEnumerable<Wct> LähimmätSijainnista(double lat, double lon, int? maara, string postinumero, string kaupunki)
         {
-            var c = new Coordinate(lon, lat);
-            var a = db.Wct.OrderBy(wc => wc.Sijainti.Distance(new Point(c) { SRID = 4326 })).ToList();
-            return a;
+            var sijainti = new Point(lon, lat) { SRID = 4326 };
+            return LähimmätSijainnista(sijainti, maara, postinumero, kaupunki);
+        }
+
+        private IEnumerable<Wct> LähimmätSijainnista(Point sijainti, int? määrä, string postinumero, string kaupunki)
+        {
+            var lista = db.Wct.OrderBy(wc => wc.Sijainti.Distance(sijainti)).ToList();
+            if (!string.IsNullOrWhiteSpace(postinumero))
+            {
+                lista = lista.Where(wc => wc.Postinro == postinumero.Trim()).ToList();
+            }
+            else if (!string.IsNullOrWhiteSpace(kaupunki))
+            {
+                lista = lista.Where(wc => wc.Kaupunki.ToLower() == kaupunki.Trim().ToLower()).ToList();
+            }
+            if (määrä != null)
+            {
+                return lista.Take(määrä.GetValueOrDefault());
+            }
+            else
+            {
+                return lista;
+            }
         }
 
         [HttpGet("Lahimmat/{paikka}", Name = "Lähimmät paikasta")]
-        public IEnumerable<Wct> LähimmätPaikasta(string paikka)
+        public IEnumerable<Wct> LähimmätPaikasta(string paikka, int? maara, string postinumero, string kaupunki)
         {
             var sijainti = Osoite.Haku(paikka);
-            var a = db.Wct.OrderBy(wc => wc.Sijainti.Distance(sijainti)).ToList();
-            return a;
+            return LähimmätSijainnista(sijainti, maara, postinumero, kaupunki);
         }
 
         [HttpPost]
@@ -76,10 +95,10 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var uusi = new Wct();
-                uusi.Nimi = wc.Nimi;
-                uusi.Katuosoite = wc.Katuosoite;
-                uusi.Postinro = wc.Postinro;
-                uusi.Kaupunki = wc.Kaupunki;
+                uusi.Nimi = wc.Nimi.Trim();
+                uusi.Katuosoite = wc.Katuosoite.Trim();
+                uusi.Postinro = wc.Postinro.Trim();
+                uusi.Kaupunki = wc.Kaupunki.Trim();
                 var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
                 uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 uusi.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
@@ -87,9 +106,9 @@ namespace VessahakuAPI.Controllers
                 uusi.Ilmainen = wc.Ilmainen;
                 uusi.Unisex = wc.Unisex;
                 uusi.Saavutettava = wc.Saavutettava;
-                uusi.Aukioloajat = wc.Aukioloajat;
-                uusi.Koodi = wc.Koodi;
-                uusi.Ohjeet = wc.Ohjeet;
+                uusi.Aukioloajat = wc.Aukioloajat.Trim();
+                uusi.Koodi = wc.Koodi.Trim();
+                uusi.Ohjeet = wc.Ohjeet.Trim();
                 db.Wct.Add(uusi);
                 db.SaveChanges();
                 return Ok();
@@ -107,10 +126,10 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var muutettava = db.Wct.Find(id);
-                muutettava.Nimi = wc.Nimi;
-                muutettava.Katuosoite = wc.Katuosoite;
-                muutettava.Postinro = wc.Postinro;
-                muutettava.Kaupunki = wc.Kaupunki;
+                muutettava.Nimi = wc.Nimi.Trim();
+                muutettava.Katuosoite = wc.Katuosoite.Trim();
+                muutettava.Postinro = wc.Postinro.Trim();
+                muutettava.Kaupunki = wc.Kaupunki.Trim();
                 var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki);
                 muutettava.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 muutettava.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
@@ -118,9 +137,9 @@ namespace VessahakuAPI.Controllers
                 muutettava.Ilmainen = wc.Ilmainen;
                 muutettava.Unisex = wc.Unisex;
                 muutettava.Saavutettava = wc.Saavutettava;
-                muutettava.Aukioloajat = wc.Aukioloajat;
-                muutettava.Koodi = wc.Koodi;
-                muutettava.Ohjeet = wc.Ohjeet;
+                muutettava.Aukioloajat = wc.Aukioloajat.Trim();
+                muutettava.Koodi = wc.Koodi.Trim();
+                muutettava.Ohjeet = wc.Ohjeet.Trim();
                 muutettava.Muokattu = DateTime.Now;
                 db.Update(muutettava);
                 db.SaveChanges();
