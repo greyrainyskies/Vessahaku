@@ -19,7 +19,7 @@ namespace OsoiteGPS
                 var sijainti = JsonConvert.DeserializeObject<Result>(response.Content.ReadAsStringAsync().Result).Features.First();
                 var lon = sijainti.Geometry.Coordinates.First();
                 var lat = sijainti.Geometry.Coordinates.Last();
-                return new Point(lon, lat) { SRID = 4362 };
+                return new Point(lon, lat) { SRID = 4326 };
             }
         }
     }
