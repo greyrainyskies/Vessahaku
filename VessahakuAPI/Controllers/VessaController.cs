@@ -56,12 +56,11 @@ namespace VessahakuAPI.Controllers
         }
 
         [HttpGet("Lahimmat/{lat}/{lon}", Name = "Lähimmät sijainnista")]
-        public IEnumerable<Wct> LähimmätSijainnista(double lat, double lon, int? maara, string postinumero, string kaupunki)
+        public IEnumerable<Wct> LähimmätSijainnista(string lat, string lon, int? maara, string postinumero, string kaupunki)
         {
-            var sijainti = new Point(lon, lat) { SRID = 4326 };
+            var sijainti = new Point(Convert.ToDouble(lon), Convert.ToDouble(lat)) { SRID = 4326 };
             return LähimmätSijainnista(sijainti, maara, postinumero, kaupunki);
         }
-
         private IEnumerable<Wct> LähimmätSijainnista(Point sijainti, int? määrä, string postinumero, string kaupunki)
         {
             var lista = db.Wct.OrderBy(wc => wc.Sijainti.Distance(sijainti)).ToList();
@@ -135,7 +134,7 @@ namespace VessahakuAPI.Controllers
         }
 
         // PUT: api/Vessa/5
-        [HttpPut("{id}")]
+        [HttpPost("{id}")]
         public IActionResult Put(int id, [FromBody] Wct wc)
         {
             try

@@ -40,6 +40,30 @@ namespace VessaMVC.Controllers
             return View(wc);
         }
 
+        public ActionResult Lahimmat()
+        {
+            return View();
+        }
+
+        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka)
+        {
+            List<Wct> lista = new List<Wct>();
+            if (!string.IsNullOrWhiteSpace(paikka))
+            {
+                lista = j.Lahimmat(paikka);
+                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
+            }
+            else if (lat != null && lon != null)
+            {
+                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault());
+            }
+            else
+            {
+                lista = JsonConvert.DeserializeObject<List<Wct>>(j.Jsonhommat());
+            }
+            return PartialView(lista);
+        }
+
         // GET: Vessa/Create
         public ActionResult LisaaWc()
         {
@@ -97,47 +121,47 @@ namespace VessaMVC.Controllers
         // GET: Vessa/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            string json = j.Jsonhommat(id:id, urlinloppu:"Tiedot/");
+            Wct wc;
+            wc = JsonConvert.DeserializeObject<Wct>(json);
+            return View(wc);
+           
         }
 
         // POST: Vessa/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Wct wc, int id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            //string url = $"https://localhost:44330/api/vessa/";
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+            //string body = JsonConvert.SerializeObject(wc);
+
+           
+                using (var client = new HttpClient())
+                {
+                    string json = JsonConvert.SerializeObject(wc);
+                
+                    client.DefaultRequestHeaders.Accept.Add(new
+                   MediaTypeWithQualityHeaderValue("application/json"));
+                    var content = new StringContent(json, UTF8Encoding.UTF8, "application/json");
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    var response = client.PostAsync($"https://localhost:44330/api/vessa/{id}", content).Result;
+                    //json = response.Content.ReadAsStringAsync().Result;
+
+                   
+                
+                if(response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", new {id=id });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Jotain meni pieleen.");
+                    return View(wc);
+                }
             }
         }
-
-        // GET: Vessa/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Vessa/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
     }
 }

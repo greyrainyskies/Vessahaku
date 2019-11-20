@@ -1,0 +1,59 @@
+﻿@model IEnumerable<VessaMVC.Models.Wct>
+@if (ViewBag.Paikka != null)
+{
+    <h2 class="mb-3">Lähimmät vessat kohteesta @ViewBag.Paikka</h2>
+}
+else
+{
+    <h2 class="mb-3">Lähimmät vessat sijainnistasi</h2>
+}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="align-middle">
+                    @Html.DisplayNameFor(model => model.Nimi)
+                </th>
+                <th class="align-middle">
+                    @Html.DisplayNameFor(model => model.Katuosoite)
+                </th>
+                <th class="align-middle">
+                    @Html.DisplayNameFor(model => model.Kaupunki)
+                </th>
+                <th class="align-middle">
+                    @Html.DisplayNameFor(model => model.Ilmainen)
+                </th>
+                <th class="align-middle">
+                    @Html.DisplayNameFor(model => model.Aukioloajat)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Nimi)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Katuosoite)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Kaupunki)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Ilmainen)
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.Aukioloajat)
+                </td>
+                <td class="align-middle">
+                    @Html.ActionLink("Lisätiedot", "Details", new { id = item.WcId }, new { @class = "btn btn-primary m-1 btn-sm" })
+                    @Html.ActionLink("Muokkaa", "Edit", new { id = item.WcId }, new { @class = "btn btn-outline-primary m-1 btn-sm" })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

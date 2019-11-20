@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Wct</h4>
+    <h4>Vessat</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -117,6 +117,8 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WcId }) |
+    @*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
+    <input type="button" value="Takasin" onclick="window.history.back()" />
+
 </div>
