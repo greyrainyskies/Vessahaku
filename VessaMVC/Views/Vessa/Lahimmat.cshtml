@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "Lahimmat";
+}
+
+<h1>Lahimmat</h1>
+<input type="text" id="paikka" />
+<input type="button" id="hae" value="Hae" onclick="HaeLista();" />
+<div id="lista"></div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    var coords;
+    function HaeLista() {
+        $.ajax({
+            url: '@Url.Action("LahimmatLista", "Vessa")',
+            //Passes the content of an input up
+            data: { paikka: $('#paikka').val() },
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+            $('#lista').html(data);
+            }
+        });
+    }
+
+    function Paikanna() {
+        navigator.geolocation.getCurrentPosition(PaikannusOnnistui)
+    }
+
+    function PaikannusOnnistui(data) {
+        $.ajax({
+            url: '@Url.Action("LahimmatLista", "Vessa")',
+            data: { lat: data.coords.latitude, lon: data.coords.longitude },
+            success: function (data) {
+                $('#lista').html(data);
+            }
+        });
+    }
+
+    $(function () {
+        Paikanna();
+    })
+</script>

@@ -39,6 +39,29 @@ namespace VessaMVC.Controllers
             return View(wc);
         }
 
+        public ActionResult Lahimmat()
+        {
+            return View();
+        }
+
+        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka)
+        {
+            List<Wct> lista = new List<Wct>();
+            if (!string.IsNullOrWhiteSpace(paikka))
+            {
+                lista = j.Lahimmat(paikka);
+            }
+            else if (lat != null && lon != null)
+            {
+                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault());
+            }
+            else
+            {
+                lista = JsonConvert.DeserializeObject<List<Wct>>(j.Jsonhommat());
+            }
+            return PartialView(lista);
+        }
+
         // GET: Vessa/Create
         public ActionResult LisaaWc()
         {
