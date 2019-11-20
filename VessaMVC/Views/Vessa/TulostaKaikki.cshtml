@@ -4,11 +4,11 @@
     ViewData["Title"] = "näytä";
 }
 
-<h1>TulostaKaikki</h1>
+<h1>Kaikki WC:t:</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -58,9 +58,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.WcId)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Nimi)
             </td>
@@ -90,8 +90,8 @@
                 @Html.DisplayFor(modelItem => item.Ohjeet)*@
            
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.WcId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.WcId}) |
+                @Html.ActionLink("Muokkaa", "Edit", new { id=item.WcId }) |
+                @Html.ActionLink("Lisätiedot", "Details", new { id=item.WcId}) |
              
             </td>
         </tr>
