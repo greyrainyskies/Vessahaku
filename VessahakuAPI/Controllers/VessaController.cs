@@ -25,11 +25,12 @@ namespace VessahakuAPI.Controllers
 
             return vessat.ToList();
         }
-        [HttpGet("Tiedot/{id}", Name = "HakuID")]
-        public Wct GetIdllä(int id)
+        [HttpGet("Tiedot/{id}", Name = "Tiedot")]
+        public Wct Tiedot(int id)
         {
             return db.Wct.Find(id);
         }
+
         // GET: api/Vessa/5
         [HttpGet("Haku/{nimi}", Name = "Haku")]
         public IEnumerable<Wct> GetNimellä(string nimi)
@@ -125,7 +126,7 @@ namespace VessahakuAPI.Controllers
                 uusi.Ohjeet = SiistiRivi(wc.Ohjeet);
                 db.Wct.Add(uusi);
                 db.SaveChanges();
-                return Ok();
+                return CreatedAtAction("Tiedot", "Vessa", new { id = uusi.WcId }, uusi);
             }
             catch (Exception e)
             {
