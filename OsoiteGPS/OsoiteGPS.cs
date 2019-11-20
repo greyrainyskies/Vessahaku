@@ -43,5 +43,31 @@ namespace OsoiteGPS
                 throw new ArgumentException("Osoitetieto virheellinen. Yritä uudelleen.");
             }
         }
+
+        public static string Postinumero(string katuosoite, string kaupunki)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.GetAsync(baseURL + "search?text=" + HttpUtility.UrlEncode($"{katuosoite}, {kaupunki}")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var sijainti = JsonConvert.DeserializeObject<Result>(response.Content.ReadAsStringAsync().Result).Features.First();
+                    if (sijainti.Properties.Confidence >= 0.85M)
+                    {
+                        return sijainti.Properties.Postalcode;
+
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Sopivaa postinumeroa ei löytynyt.");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Postinumerohaku ei onnistunut.");
+                }
+            }
+        }
     }
 }
