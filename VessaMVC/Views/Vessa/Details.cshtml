@@ -97,6 +97,8 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id= Model.WcId}) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WcId }) |
+    @*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
+    <input type="button" value="Takasin" onclick="window.history.back()" />
+
 </div>
