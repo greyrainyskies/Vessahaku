@@ -97,8 +97,15 @@ namespace VessahakuAPI.Controllers
                 var uusi = new Wct();
                 uusi.Nimi = wc.Nimi;
                 uusi.Katuosoite = wc.Katuosoite;
-                uusi.Postinro = wc.Postinro;
                 uusi.Kaupunki = wc.Kaupunki;
+                try
+                {
+                    uusi.Postinro = Osoite.Postinumero(uusi.Katuosoite, uusi.Kaupunki);
+                }
+                catch (ArgumentException)
+                {
+                    uusi.Postinro = wc.Postinro;
+                }
                 var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
                 uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 uusi.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
@@ -113,9 +120,9 @@ namespace VessahakuAPI.Controllers
                 db.SaveChanges();
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message); // Poista e.Message ennen tuotantoa
             }
         }
 

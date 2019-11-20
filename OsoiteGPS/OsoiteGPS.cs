@@ -56,7 +56,6 @@ namespace OsoiteGPS
                     if (sijainti.Properties.Confidence >= 0.85M)
                     {
                         return sijainti.Properties.Postalcode;
-
                     }
                     else
                     {
