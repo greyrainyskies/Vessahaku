@@ -57,7 +57,7 @@ namespace VessaMVC.Models
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(url + "Lahimmat/" + HttpUtility.UrlEncode(paikka)).Result;
+                var response = client.GetAsync(url + "Lahimmat/" + paikka).Result;
                 var json = response.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<List<Wct>>(json);
             }
