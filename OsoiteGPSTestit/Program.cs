@@ -9,8 +9,8 @@ namespace OsoiteGPSTestit
         {
             try
             {
-                var piste = Osoite.Haku("Kiasma");
-                Console.WriteLine(piste.Coordinates[0]);
+                var postinumero = Osoite.Postinumero("XX", "");
+                Console.WriteLine(postinumero);
             }
             catch (Exception e)
             {
