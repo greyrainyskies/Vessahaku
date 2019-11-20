@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Newtonsoft.Json;
 
 using VessaMVC.Models;
@@ -86,7 +87,8 @@ namespace VessaMVC.Controllers
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    var luotu = JsonConvert.DeserializeObject<Wct>(response.Content.ReadAsStringAsync().Result);
+                    return RedirectToAction("Details", new {id=luotu.WcId });
                 }
                 else
                 {
