@@ -151,7 +151,7 @@ namespace VessaMVC.Controllers
                 
                 if(response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Details", id);
+                    return RedirectToAction("Details", new {id=id });
                 }
                 else
                 {
@@ -160,27 +160,6 @@ namespace VessaMVC.Controllers
                 }
             }
         }
-        // GET: Vessa/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Vessa/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
     }
 }
