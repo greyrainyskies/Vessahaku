@@ -1,0 +1,113 @@
+﻿@model IEnumerable<VessaMVC.Models.Wct>
+@if (ViewBag.Paikka != null)
+{
+    <h2>Lähimmät vessat kohteesta @ViewBag.Paikka</h2>
+}
+else
+{
+    <h2>Lähimmät vessat sijainnistasi</h2>
+}
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WcId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nimi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kaupunki)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Katuosoite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Postinro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unisex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saavutettava)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ilmainen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aukioloajat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Koodi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ohjeet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lisätty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Muokattu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KäyttäjäId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WcId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nimi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kaupunki)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Katuosoite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Postinro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unisex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saavutettava)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ilmainen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aukioloajat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Koodi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ohjeet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lisätty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Muokattu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KäyttäjäId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
