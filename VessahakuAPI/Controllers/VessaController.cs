@@ -95,16 +95,23 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var uusi = new Wct();
-                uusi.Nimi = wc.Nimi;
-                uusi.Katuosoite = wc.Katuosoite;
-                uusi.Kaupunki = wc.Kaupunki;
+                uusi.Nimi = SiistiRivi(wc.Nimi);
+                uusi.Katuosoite = SiistiRivi(wc.Katuosoite);
+                uusi.Kaupunki = SiistiRivi(wc.Kaupunki);
                 try
                 {
                     uusi.Postinro = Osoite.Postinumero(uusi.Katuosoite, uusi.Kaupunki);
                 }
                 catch (ArgumentException)
                 {
-                    uusi.Postinro = wc.Postinro;
+                    if (wc.Postinro.Length == 5 && wc.Postinro.ToCharArray().All(c => char.IsDigit(c)))
+                    {
+                        uusi.Postinro = wc.Postinro;
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
                 var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
                 uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
@@ -113,9 +120,9 @@ namespace VessahakuAPI.Controllers
                 uusi.Ilmainen = wc.Ilmainen;
                 uusi.Unisex = wc.Unisex;
                 uusi.Saavutettava = wc.Saavutettava;
-                uusi.Aukioloajat = wc.Aukioloajat;
-                uusi.Koodi = wc.Koodi;
-                uusi.Ohjeet = wc.Ohjeet;
+                uusi.Aukioloajat = SiistiRivi(wc.Aukioloajat);
+                uusi.Koodi = !string.IsNullOrEmpty(wc.Koodi) ? wc.Koodi.Trim() : wc.Koodi;
+                uusi.Ohjeet = SiistiRivi(wc.Ohjeet);
                 db.Wct.Add(uusi);
                 db.SaveChanges();
                 return Ok();
@@ -133,16 +140,24 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var muutettava = db.Wct.Find(id);
-                muutettava.Nimi = wc.Nimi;
-                muutettava.Katuosoite = wc.Katuosoite;
-                muutettava.Kaupunki = wc.Kaupunki;
+                muutettava.Nimi = SiistiRivi(wc.Nimi);
+                muutettava.Katuosoite = SiistiRivi(wc.Katuosoite);
+                muutettava.Kaupunki = SiistiRivi(wc.Kaupunki);
                 try
                 {
                     muutettava.Postinro = Osoite.Postinumero(muutettava.Katuosoite, muutettava.Kaupunki);
                 }
                 catch (ArgumentException)
                 {
-                    muutettava.Postinro = wc.Postinro;
+                    if (wc.Postinro.Length == 5 && wc.Postinro.ToCharArray().All(c => char.IsDigit(c)))
+                    {
+                        muutettava.Postinro = wc.Postinro;
+
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
                 var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki);
                 muutettava.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
@@ -151,9 +166,9 @@ namespace VessahakuAPI.Controllers
                 muutettava.Ilmainen = wc.Ilmainen;
                 muutettava.Unisex = wc.Unisex;
                 muutettava.Saavutettava = wc.Saavutettava;
-                muutettava.Aukioloajat = wc.Aukioloajat;
-                muutettava.Koodi = wc.Koodi;
-                muutettava.Ohjeet = wc.Ohjeet;
+                muutettava.Aukioloajat = SiistiRivi(wc.Aukioloajat);
+                muutettava.Koodi = !string.IsNullOrEmpty(wc.Koodi) ? wc.Koodi.Trim() : wc.Koodi;
+                muutettava.Ohjeet = SiistiRivi(wc.Ohjeet);
                 muutettava.Muokattu = DateTime.Now;
                 db.Update(muutettava);
                 db.SaveChanges();
@@ -170,7 +185,7 @@ namespace VessahakuAPI.Controllers
             if (!string.IsNullOrEmpty(teksti))
             {
                 var trimmattu = teksti.Trim();
-                return teksti.Substring(0, 1).ToUpper() + teksti.Substring(1);
+                return trimmattu.Substring(0, 1).ToUpper() + trimmattu.Substring(1);
             }
             else
             {
