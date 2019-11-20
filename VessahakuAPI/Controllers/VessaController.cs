@@ -133,10 +133,17 @@ namespace VessahakuAPI.Controllers
             try
             {
                 var muutettava = db.Wct.Find(id);
-                muutettava.Nimi = wc.Nimi.Trim();
-                muutettava.Katuosoite = wc.Katuosoite.Trim();
-                muutettava.Postinro = wc.Postinro.Trim();
-                muutettava.Kaupunki = wc.Kaupunki.Trim();
+                muutettava.Nimi = wc.Nimi;
+                muutettava.Katuosoite = wc.Katuosoite;
+                muutettava.Kaupunki = wc.Kaupunki;
+                try
+                {
+                    muutettava.Postinro = Osoite.Postinumero(muutettava.Katuosoite, muutettava.Kaupunki);
+                }
+                catch (ArgumentException)
+                {
+                    muutettava.Postinro = wc.Postinro;
+                }
                 var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki);
                 muutettava.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 muutettava.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
@@ -144,9 +151,9 @@ namespace VessahakuAPI.Controllers
                 muutettava.Ilmainen = wc.Ilmainen;
                 muutettava.Unisex = wc.Unisex;
                 muutettava.Saavutettava = wc.Saavutettava;
-                muutettava.Aukioloajat = wc.Aukioloajat.Trim();
-                muutettava.Koodi = wc.Koodi.Trim();
-                muutettava.Ohjeet = wc.Ohjeet.Trim();
+                muutettava.Aukioloajat = wc.Aukioloajat;
+                muutettava.Koodi = wc.Koodi;
+                muutettava.Ohjeet = wc.Ohjeet;
                 muutettava.Muokattu = DateTime.Now;
                 db.Update(muutettava);
                 db.SaveChanges();
@@ -155,6 +162,19 @@ namespace VessahakuAPI.Controllers
             catch (Exception)
             {
                 return BadRequest();
+            }
+        }
+
+        private string SiistiRivi(string teksti)
+        {
+            if (!string.IsNullOrEmpty(teksti))
+            {
+                var trimmattu = teksti.Trim();
+                return teksti.Substring(0, 1).ToUpper() + teksti.Substring(1);
+            }
+            else
+            {
+                return teksti;
             }
         }
 
