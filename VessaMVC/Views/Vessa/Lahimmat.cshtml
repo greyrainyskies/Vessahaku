@@ -1,12 +1,12 @@
 ﻿
 @{
-    ViewData["Title"] = "Lahimmat";
+    ViewData["Title"] = "Lähimmät vessat";
 }
-
-<h1>Lahimmat</h1>
-<input type="text" id="paikka" />
-<input type="button" id="hae" value="Hae" onclick="HaeLista();" />
-<hr />
+<div class="form-row mb-4 mt-4">
+    <div class="col-form-label">Osoite tai paikka:</div>
+    <input type="text" id="paikka" class="form-control col-3 mx-2" />
+    <input type="button" class="btn btn-primary mx-2" id="hae" value="Hae" onclick="HaeLista();" />
+</div>
 <div id="lista"></div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
@@ -39,5 +39,10 @@
 
     $(function () {
         Paikanna();
+        document.getElementById("paikka").addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                HaeLista();
+            }
+        })
     })
 </script>
