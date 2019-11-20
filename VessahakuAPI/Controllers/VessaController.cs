@@ -120,7 +120,7 @@ namespace VessahakuAPI.Controllers
         }
 
         // PUT: api/Vessa/5
-        [HttpPut("{id}")]
+        [HttpPost("{id}")]
         public IActionResult Put(int id, [FromBody] Wct wc)
         {
             try
