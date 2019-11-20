@@ -50,6 +50,7 @@ namespace VessaMVC.Controllers
             if (!string.IsNullOrWhiteSpace(paikka))
             {
                 lista = j.Lahimmat(paikka);
+                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
             }
             else if (lat != null && lon != null)
             {
