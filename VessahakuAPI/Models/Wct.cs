@@ -24,7 +24,9 @@ namespace VessahakuAPI.Models
         public string Aukioloajat { get; set; }
         public string Koodi { get; set; }
         public string Ohjeet { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Lisätty { get; set; }
+        [DataType(DataType.Date)]
         public DateTime? Muokattu { get; set; }
         public int? KäyttäjäId { get; set; }
         [JsonIgnore]
