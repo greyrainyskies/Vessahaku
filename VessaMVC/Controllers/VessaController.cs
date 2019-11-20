@@ -64,7 +64,7 @@ namespace VessaMVC.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var luotu = JsonConvert.DeserializeObject<Wct>(response.Content.ReadAsStringAsync().Result);
-                    return RedirectToAction("Tiedot", new {id=luotu.WcId });
+                    return RedirectToAction("Details", new {id=luotu.WcId });
                 }
                 else
                 {

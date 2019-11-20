@@ -10,89 +10,109 @@
     <h4>Wct</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.WcId)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.WcId)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nimi)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nimi)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Kaupunki)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Kaupunki)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Katuosoite)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Katuosoite)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Postinro)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Postinro)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Kaupunki)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Kaupunki)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Unisex)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Unisex)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Saavutettava)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Saavutettava)
+        <dd class="col-sm-10">
+            @if (Model.Saavutettava == null)
+            {
+                <text>Ei tiedossa.</text>
+            }
+            else if (Model.Saavutettava == true)
+            {
+                <input type="radio" checked="checked" disabled="disabled"><text>Kyllä</text>
+                <input type="radio" disabled="disabled"><text>Ei</text>
+            }
+            else
+            {
+                <input type="radio" disabled="disabled"><text>Kyllä</text>
+                <input type="radio" checked="checked" disabled="disabled"><text>Ei</text>
+            }
+
+
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ilmainen)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ilmainen)
+        <dd class="col-sm-10">
+            @if (Model.Ilmainen == true)
+            {
+
+                <input type="radio" checked="checked" disabled="disabled"><text>Kyllä</text>
+                <input type="radio" disabled="disabled"><text>Ei</text>
+            }
+           else
+            {
+                <input type="radio" disabled="disabled"><text>Kyllä</text>
+                <input type="radio" checked="checked" disabled="disabled"><text>Ei</text>
+            }
         </dd>
-        <dt class = "col-sm-2">
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Aukioloajat)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Aukioloajat)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Koodi)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Koodi)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ohjeet)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ohjeet)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Lisätty)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Lisätty)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Muokattu)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Muokattu)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KäyttäjäId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.KäyttäjäId)
         </dd>
     </dl>
 </div>
