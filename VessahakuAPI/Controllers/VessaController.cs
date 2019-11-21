@@ -30,6 +30,29 @@ namespace VessahakuAPI.Controllers
         {
             return db.Wct.Find(id);
         }
+        [HttpGet("Kommentit/{id}", Name = "Kommentit")]
+        public IEnumerable<Kommentit> Kommentti(int id)
+        {
+            var a = db.Kommentit.Where(i => i.WcId == id).ToList();
+            return a;
+        }
+        [HttpPost("Kommentit/{id}", Name = "Kommentit")]
+        public IActionResult Kommentti(int id, Kommentit k)
+        {
+            try
+            {
+                var a=new Kommentit { Arvio = k.Arvio, Sisältö = k.Sisältö, WcId = id };
+                db.Kommentit.Add(a);
+                db.SaveChanges();
+                return CreatedAtAction("Tiedot", "Vessa", new { id = k.WcId }, k);
+            }
+            catch
+            {
+                return BadRequest();
+
+            }
+             
+        }
 
         // GET: api/Vessa/5
         [HttpGet("Haku/{nimi}", Name = "Haku")]
@@ -56,10 +79,11 @@ namespace VessahakuAPI.Controllers
         }
 
         [HttpGet("Lahimmat/{lat}/{lon}", Name = "Lähimmät sijainnista")]
-        public IEnumerable<Wct> LähimmätSijainnista(string lat, string lon, int? maara, string postinumero, string kaupunki)
+        public object LähimmätSijainnista(string lat, string lon, int? maara, string postinumero, string kaupunki)
         {
             var sijainti = new Point(Convert.ToDouble(lon), Convert.ToDouble(lat)) { SRID = 4326 };
-            return LähimmätSijainnista(sijainti, maara, postinumero, kaupunki);
+            var osoite = Osoite.SijainninPerusteella(Convert.ToDecimal(lat), Convert.ToDecimal(lon));
+            return new { osoite = osoite, vessat = LähimmätSijainnista(sijainti, maara, postinumero, kaupunki) };
         }
         private IEnumerable<Wct> LähimmätSijainnista(Point sijainti, int? määrä, string postinumero, string kaupunki)
         {
@@ -83,10 +107,10 @@ namespace VessahakuAPI.Controllers
         }
 
         [HttpGet("Lahimmat/{paikka}", Name = "Lähimmät paikasta")]
-        public IEnumerable<Wct> LähimmätPaikasta(string paikka, int? maara, string postinumero, string kaupunki)
+        public object LähimmätPaikasta(string paikka, int? maara, string postinumero, string kaupunki)
         {
-            var sijainti = Osoite.Haku(paikka);
-            return LähimmätSijainnista(sijainti, maara, postinumero, kaupunki);
+            var sijaintitiedot = Osoite.Haku(paikka);
+            return new { osoite = sijaintitiedot.osoite, vessat = LähimmätSijainnista(sijaintitiedot.sijainti, maara, postinumero, kaupunki) };
         }
 
         [HttpPost]
@@ -113,7 +137,7 @@ namespace VessahakuAPI.Controllers
                         return BadRequest();
                     }
                 }
-                var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki);
+                var sijainti = Osoite.Haku(uusi.Katuosoite, uusi.Postinro, uusi.Kaupunki).Item2;
                 uusi.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 uusi.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
                 uusi.Sijainti = sijainti;
@@ -159,7 +183,7 @@ namespace VessahakuAPI.Controllers
                         return BadRequest();
                     }
                 }
-                var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki);
+                var sijainti = Osoite.Haku(muutettava.Katuosoite, muutettava.Postinro, muutettava.Kaupunki).Item2;
                 muutettava.Lat = Convert.ToDecimal(sijainti.Coordinates.First().Y);
                 muutettava.Long = Convert.ToDecimal(sijainti.Coordinates.First().X);
                 muutettava.Sijainti = sijainti;

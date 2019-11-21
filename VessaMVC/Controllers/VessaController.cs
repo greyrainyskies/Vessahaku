@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
 using System.Text;
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Newtonsoft.Json;
-
 using VessaMVC.Models;
 
 
@@ -37,25 +34,38 @@ namespace VessaMVC.Controllers
         {
             string json = j.Jsonhommat(id:id, urlinloppu:"tiedot/");
             Wct wc= JsonConvert.DeserializeObject<Wct>(json);
+            string json2 = j.Jsonhommat(id: id, urlinloppu: "Kommentit/");
+            List<Kommentit> k = JsonConvert.DeserializeObject<List<Kommentit>>(json2);
+            ViewBag.k = k;
+            
+
             return View(wc);
         }
+        //[ChildActionOnly]
+        //public ViewResult Kommentit(int id)
+        //{
+        //}
 
         public ActionResult Lahimmat()
         {
             return View();
         }
 
-        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka)
+        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka, int? maara, string postinumero, string kaupunki)
         {
+            Results hakutulos;
             List<Wct> lista = new List<Wct>();
             if (!string.IsNullOrWhiteSpace(paikka))
             {
-                lista = j.Lahimmat(paikka);
-                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
+                hakutulos = j.Lahimmat(paikka, maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else if (lat != null && lon != null)
             {
-                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault());
+                hakutulos = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else
             {
@@ -99,8 +109,39 @@ namespace VessaMVC.Controllers
 
             }
         }
+        public ActionResult LisaaKommenttia(int id)
+        {
+            ViewBag.id = id;
+            return View();
+            
+        }
+        public ActionResult LisaaKommentti(int id, Kommentit k)
+        {
+            using (var client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(k);
+
+                client.DefaultRequestHeaders.Accept.Add(new
+               MediaTypeWithQualityHeaderValue("application/json"));
+                var content = new StringContent(json, UTF8Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = client.PostAsync($"https://localhost:44330/api/vessa/kommentit/{id}", content).Result;
+                //json = response.Content.ReadAsStringAsync().Result;
 
 
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", new { id = id });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Jotain meni pieleen.");
+                    return View(k);
+                }
+
+            }
+        }
         // POST: Vessa/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -153,7 +194,9 @@ namespace VessaMVC.Controllers
                 
                 if(response.IsSuccessStatusCode)
                 {
+
                     return RedirectToAction("Details", new {id=id });
+
                 }
                 else
                 {
