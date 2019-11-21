@@ -145,7 +145,7 @@ namespace VessahakuAPI.Controllers
                 uusi.Unisex = wc.Unisex;
                 uusi.Saavutettava = wc.Saavutettava;
                 uusi.Aukioloajat = SiistiRivi(wc.Aukioloajat);
-                uusi.Koodi = !string.IsNullOrEmpty(wc.Koodi) ? wc.Koodi.Trim() : wc.Koodi;
+                uusi.Koodi = wc.Koodi?.Trim();
                 uusi.Ohjeet = SiistiRivi(wc.Ohjeet);
                 db.Wct.Add(uusi);
                 db.SaveChanges();
@@ -191,7 +191,7 @@ namespace VessahakuAPI.Controllers
                 muutettava.Unisex = wc.Unisex;
                 muutettava.Saavutettava = wc.Saavutettava;
                 muutettava.Aukioloajat = SiistiRivi(wc.Aukioloajat);
-                muutettava.Koodi = !string.IsNullOrEmpty(wc.Koodi) ? wc.Koodi.Trim() : wc.Koodi;
+                muutettava.Koodi = wc.Koodi?.Trim();
                 muutettava.Ohjeet = SiistiRivi(wc.Ohjeet);
                 muutettava.Muokattu = DateTime.Now;
                 db.Update(muutettava);
