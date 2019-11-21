@@ -1,5 +1,6 @@
 ﻿@model VessaMVC.Models.Wct
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -77,7 +78,7 @@
                 <input type="radio" checked="checked" disabled="disabled"><text>Kyllä</text>
                 <input type="radio" disabled="disabled"><text>Ei</text>
             }
-           else
+            else
             {
                 <input type="radio" disabled="disabled"><text>Kyllä</text>
                 <input type="radio" checked="checked" disabled="disabled"><text>Ei</text>
@@ -117,8 +118,38 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.WcId }) |
+    @if (ViewBag.k.Count != 0)
+    {
+    <h3>Kommentit:</h3>
+       @foreach (var item in ViewBag.k)
+        {
+           <ul>
+        <li>Kommentti: @item.Sisältö</li>
+        <li>Arvio: @for (int i = 0; i < @item.Arvio; i++)
+        {
+            <nobr>&#9733 </nobr>
+        } 
+               </li>
+        <li>Lisätty: @item.Lisätty</li>
+               
+          </ul>
+          <p></p>
+
+        }
+    }
+    else
+    {
+        <h3>Yhtään kommenttia ei ole lisätty.</h3>
+    }
+
+
+
+</div>
+<div>
+    @Html.ActionLink("Muokkaa", "Edit", new { id = Model.WcId }) |
     @*@Html.ActionLink("Back to previous page", null, null, null, new { href = Request.UrlReferrer })*@
     <input type="button" value="Takasin" onclick="window.history.back()" />
+    @Html.ActionLink("Kommentoi", "LisaaKommenttia", new { id = Model.WcId })
+
 
 </div>

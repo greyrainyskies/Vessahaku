@@ -30,6 +30,29 @@ namespace VessahakuAPI.Controllers
         {
             return db.Wct.Find(id);
         }
+        [HttpGet("Kommentit/{id}", Name = "Kommentit")]
+        public IEnumerable<Kommentit> Kommentti(int id)
+        {
+            var a = db.Kommentit.Where(i => i.WcId == id).ToList();
+            return a;
+        }
+        [HttpPost("Kommentit/{id}", Name = "Kommentit")]
+        public IActionResult Kommentti(int id, Kommentit k)
+        {
+            try
+            {
+                var a=new Kommentit { Arvio = k.Arvio, Sisältö = k.Sisältö, WcId = id };
+                db.Kommentit.Add(a);
+                db.SaveChanges();
+                return CreatedAtAction("Tiedot", "Vessa", new { id = k.WcId }, k);
+            }
+            catch
+            {
+                return BadRequest();
+
+            }
+             
+        }
 
         // GET: api/Vessa/5
         [HttpGet("Haku/{nimi}", Name = "Haku")]

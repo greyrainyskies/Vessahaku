@@ -37,8 +37,17 @@ namespace VessaMVC.Controllers
         {
             string json = j.Jsonhommat(id:id, urlinloppu:"tiedot/");
             Wct wc= JsonConvert.DeserializeObject<Wct>(json);
+            string json2 = j.Jsonhommat(id: id, urlinloppu: "Kommentit/");
+            List<Kommentit> k = JsonConvert.DeserializeObject<List<Kommentit>>(json2);
+            ViewBag.k = k;
+            
+
             return View(wc);
         }
+        //[ChildActionOnly]
+        //public ViewResult Kommentit(int id)
+        //{
+        //}
 
         public ActionResult Lahimmat()
         {
@@ -99,8 +108,39 @@ namespace VessaMVC.Controllers
 
             }
         }
+        public ActionResult LisaaKommenttia(int id)
+        {
+            ViewBag.id = id;
+            return View();
+            
+        }
+        public ActionResult LisaaKommentti(int id, Kommentit k)
+        {
+            using (var client = new HttpClient())
+            {
+                string json = JsonConvert.SerializeObject(k);
+
+                client.DefaultRequestHeaders.Accept.Add(new
+               MediaTypeWithQualityHeaderValue("application/json"));
+                var content = new StringContent(json, UTF8Encoding.UTF8, "application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = client.PostAsync($"https://localhost:44330/api/vessa/kommentit/{id}", content).Result;
+                //json = response.Content.ReadAsStringAsync().Result;
 
 
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", new { id = id });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Jotain meni pieleen.");
+                    return View(k);
+                }
+
+            }
+        }
         // POST: Vessa/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
