@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Vessahaku</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/yetibootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-success border-bottom box-shadow mb-3">  
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Vessahaku</a>
+                <a class="navbar-brand font-weight-bold" asp-area="" asp-controller="Vessa" asp-action="Lahimmat">VESSAHAKU</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,14 +19,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vessa" asp-action="Lahimmat">Hae vessaa</a>
+                            <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Vessa" asp-action="Lahimmat">HAE VESSAA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vessa" asp-action="LisaaWc">Lisää vessa</a>
+                            <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Vessa" asp-action="LisaaWc">LISÄÄ VESSA</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vessa" asp-action="Privacy">Kirjaudu</a>
-                        </li>
+                        @*<li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vessa" asp-action="Privacy">KIRJAUDU</a>
+                        </li>*@
                     </ul>
                 </div>
             </div>
