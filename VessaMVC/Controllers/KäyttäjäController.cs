@@ -32,16 +32,17 @@ namespace VessaMVC.Controllers
         }
 
         // GET: Käyttäjä/Create
-        public ActionResult LisääKäyttäjä()
+       [HttpGet]
+        public ActionResult Lisää()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult LisääKäyttäjä(Käyttäjät käyttäjä)
+        public ActionResult Lisää(Käyttäjät käyttäjä)
         {
 
-            string url = $"https://localhost:44330/api/käyttäjä";
+            string url = $"https://localhost:44330/api/käyttäjä/Lisääkäyttäjä";
 
             string body = JsonConvert.SerializeObject(käyttäjä);
 
@@ -54,12 +55,12 @@ namespace VessaMVC.Controllers
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("TulostaKäyttäjä", "Käyttäjä");
+                    return RedirectToAction("TulostaKäyttäjät", "Käyttäjä");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Jotain meni pieleen.");
-                    return View("TulostaKäyttäjät");
+                    return View();
                 }
 
 
