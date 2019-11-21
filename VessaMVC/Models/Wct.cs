@@ -24,7 +24,9 @@ namespace VessaMVC.Models
         public DateTime Lisätty { get; set; }
         public DateTime? Muokattu { get; set; }
         public int? KäyttäjäId { get; set; }
-       
 
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
     }
 }

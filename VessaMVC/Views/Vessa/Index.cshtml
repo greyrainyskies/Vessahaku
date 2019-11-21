@@ -1,0 +1,16 @@
+﻿@model VessaMVC.Models.Wct
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Hae vessaa</h1>
+
+
+
+<form method="post" action="@Url.Action("haenimellä", "Vessa") class="wchaku">
+   Vessahaku <input type="text" name="fname"> <br>
+    <input type="hidden" id="custId" name="nimi" value="nimi">
+    <input type="submit" value="Hae">
+</form>
+

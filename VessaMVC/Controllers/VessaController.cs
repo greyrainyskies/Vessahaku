@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
 using System.Text;
-
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Newtonsoft.Json;
-
 using VessaMVC.Models;
 
 
@@ -54,17 +51,21 @@ namespace VessaMVC.Controllers
             return View();
         }
 
-        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka)
+        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka, int? maara, string postinumero, string kaupunki)
         {
+            Results hakutulos;
             List<Wct> lista = new List<Wct>();
             if (!string.IsNullOrWhiteSpace(paikka))
             {
-                lista = j.Lahimmat(paikka);
-                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
+                hakutulos = j.Lahimmat(paikka, maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else if (lat != null && lon != null)
             {
-                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault());
+                hakutulos = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else
             {
@@ -193,7 +194,9 @@ namespace VessaMVC.Controllers
                 
                 if(response.IsSuccessStatusCode)
                 {
+
                     return RedirectToAction("Details", new {id=id });
+
                 }
                 else
                 {

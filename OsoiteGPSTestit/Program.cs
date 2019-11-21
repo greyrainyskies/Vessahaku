@@ -9,7 +9,7 @@ namespace OsoiteGPSTestit
         {
             try
             {
-                var postinumero = Osoite.Postinumero("XX", "");
+                var postinumero = Osoite.SijainninPerusteella(60.2017793M, 24.9377817M);
                 Console.WriteLine(postinumero);
             }
             catch (Exception e)
