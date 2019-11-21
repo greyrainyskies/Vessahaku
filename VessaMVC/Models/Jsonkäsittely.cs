@@ -42,7 +42,7 @@ namespace VessaMVC.Models
             }
         }
 
-        public List<Wct> Lahimmat(decimal lat, decimal lon, int? maara, string postinumero, string kaupunki)
+        public Results Lahimmat(decimal lat, decimal lon, int? maara, string postinumero, string kaupunki)
         {
             using (var client = new HttpClient())
             {
@@ -50,11 +50,11 @@ namespace VessaMVC.Models
                 var kokoUrl = url + "Lahimmat/" + HttpUtility.UrlEncode(lat.ToString("G8")) + "/" + HttpUtility.UrlEncode(lon.ToString("G8")) + TeeQueryString(maara, postinumero, kaupunki);
                 var response = client.GetAsync(kokoUrl).Result;
                 var json = response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<List<Wct>>(json);
+                return JsonConvert.DeserializeObject<Results>(json);
             }
         }
 
-        public List<Wct> Lahimmat(string paikka, int? maara, string postinumero, string kaupunki)
+        public Results Lahimmat(string paikka, int? maara, string postinumero, string kaupunki)
         {
             using (var client = new HttpClient())
             {
@@ -62,7 +62,7 @@ namespace VessaMVC.Models
                 var kokoUrl = url + "Lahimmat/" + paikka + TeeQueryString(maara, postinumero, kaupunki);
                 var response = client.GetAsync(kokoUrl).Result;
                 var json = response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<List<Wct>>(json);
+                return JsonConvert.DeserializeObject<Results>(json);
             }
         }
 

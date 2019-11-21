@@ -1,12 +1,18 @@
 ﻿@model IEnumerable<VessaMVC.Models.Wct>
-@if (ViewBag.Paikka != null)
-{
-    <h2 class="mb-3">Lähimmät vessat kohteesta @ViewBag.Paikka</h2>
-}
-else
-{
-    <h2 class="mb-3">Lähimmät vessat sijainnistasi</h2>
-}
+<h2 class="mb-3">
+    @if (ViewBag.Paikka != null)
+    {
+        <text>Lähimmät vessat kohteesta @ViewBag.Paikka</text>
+    }
+    else
+    {
+        <text>Lähimmät vessat sijainnistasi</text>
+    }
+    @if (ViewBag.Osoite != null)
+    {
+        <text> osoitteessa @ViewBag.Osoite</text>
+    }
+</h2>
 <div class="table-responsive-sm table-responsive-md table-responsive-lg col-xl-8 p-0">
     <table class="table">
         <tbody>
@@ -22,7 +28,7 @@ else
                         }
                         @if (!string.IsNullOrWhiteSpace(item.Aukioloajat))
                         {
-                        <div>Aukioloajat: @item.Aukioloajat</div>
+                            <div>Aukioloajat: @item.Aukioloajat</div>
                         }
                     </td>
                     <td class="align-middle">

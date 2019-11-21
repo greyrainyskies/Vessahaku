@@ -44,15 +44,19 @@ namespace VessaMVC.Controllers
 
         public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka, int? maara, string postinumero, string kaupunki)
         {
+            Results hakutulos;
             List<Wct> lista = new List<Wct>();
             if (!string.IsNullOrWhiteSpace(paikka))
             {
-                lista = j.Lahimmat(paikka, maara, postinumero, kaupunki);
-                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
+                hakutulos = j.Lahimmat(paikka, maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else if (lat != null && lon != null)
             {
-                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
+                hakutulos = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
+                lista = hakutulos.Vessat;
+                ViewBag.Osoite = hakutulos.Osoite;
             }
             else
             {
