@@ -1,6 +1,6 @@
-create database WCT
+create database Vessat
 go
-use WCT
+use Vessat
 go
 create table WCt(
 WC_ID int not null primary key identity(0, 1),
@@ -14,9 +14,9 @@ Ilmainen bit not null,
 Aukioloajat nvarchar(70),
 Koodi nvarchar(30),
 Ohjeet nvarchar(200),
-Lisätty datetime default getDate()not null,
+Lisï¿½tty datetime default getDate()not null,
 Muokattu datetime null,
-Käyttäjä_ID int null,
+Kï¿½yttï¿½jï¿½_ID int null,
 Sijainti geography not null,
 Lat decimal(11,8)not null,
 Long decimal(11,8) not null
@@ -24,22 +24,22 @@ Long decimal(11,8) not null
 go
 create table Kommentit(
 Kommentti_ID int not null primary key identity(0, 1),
-Lisätty datetime default getDate()not null,
+Lisï¿½tty datetime default getDate()not null,
 Arvio int not null check (arvio between 1 and 5),
-Sisältö nvarchar (200),
+Sisï¿½ltï¿½ nvarchar (200),
 WC_ID int not null,
-Käyttäjä_ID int null)
+Kï¿½yttï¿½jï¿½_ID int null)
 go
 alter table Kommentit ADD constraint
 fk_Kommentit_WCt
 foreign key(WC_ID)
 references WCt(WC_ID);
 go
-create table Käyttäjät(
-Käyttäjä_ID int not null primary key identity(1000, 1),
+create table Kï¿½yttï¿½jï¿½t(
+Kï¿½yttï¿½jï¿½_ID int not null primary key identity(1000, 1),
 Nimimerkki nvarchar (40)not null,
 Salasana nvarchar(40) not null,
-Sähköposti nvarchar(320) not null)
+Sï¿½hkï¿½posti nvarchar(320) not null)
 go
 insert into WCt (Nimi, Kaupunki, Katuosoite, Postinro, Sijainti, Ilmainen, Lat, Long )
 values ('KirjastoWC', 'Helsinki', 'Mannerheimintie 22 ', '00100', geography::STPointFromText('POINT(24.941119 60.201369)', 4326), 1, 60.201369, 24.941119)
