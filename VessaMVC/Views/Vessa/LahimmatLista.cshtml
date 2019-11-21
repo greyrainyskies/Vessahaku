@@ -7,7 +7,7 @@ else
 {
     <h2 class="mb-3">Lähimmät vessat sijainnistasi</h2>
 }
-<div class="table-responsive-sm table-responsive-md table-responsive-lg col-xl-7 p-0">
+<div class="table-responsive-sm table-responsive-md table-responsive-lg col-xl-8 p-0">
     <table class="table">
         <tbody>
             @foreach (var item in Model)
@@ -18,14 +18,14 @@ else
                         <div>@Html.DisplayFor(modelItem => item.Katuosoite), @Html.DisplayFor(modelItem => item.Postinro) @Html.DisplayFor(modelItem => item.Kaupunki)</div>
                         @if (item.Ilmainen)
                         {
-                            <div class="font-italic">Ilmainen.</div>
+                            <div class="font-italic">Ilmainen</div>
                         }
                         @if (!string.IsNullOrWhiteSpace(item.Aukioloajat))
                         {
                         <div>Aukioloajat: @item.Aukioloajat</div>
                         }
                     </td>
-                    <td class="align-middle align-content-xl-end">
+                    <td class="align-middle">
                         @Html.ActionLink("Lisätiedot", "Details", new { id = item.WcId }, new { @class = "btn btn-primary m-1 btn-sm" })
                         <a href="https://www.google.com/maps/search/?api=1&query=@item.Lat.ToString().Replace(',','.'),@item.Long.ToString().Replace(',','.')" target="_blank" class="btn btn-success btn-sm m-1">Näytä kartalla</a>
                         @Html.ActionLink("Muokkaa", "Edit", new { id = item.WcId }, new { @class = "btn btn-outline-primary m-1 btn-sm" })
