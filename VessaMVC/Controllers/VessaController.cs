@@ -60,16 +60,19 @@ namespace VessaMVC.Controllers
                 hakutulos = j.Lahimmat(paikka, maara, postinumero, kaupunki);
                 lista = hakutulos.Vessat;
                 ViewBag.Osoite = hakutulos.Osoite;
+                ViewBag.Paikka = true;
             }
             else if (lat != null && lon != null)
             {
                 hakutulos = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
                 lista = hakutulos.Vessat;
                 ViewBag.Osoite = hakutulos.Osoite;
+                ViewBag.Paikka = false;
             }
             else
             {
                 lista = JsonConvert.DeserializeObject<List<Wct>>(j.Jsonhommat());
+                ViewBag.Paikka = false;
             }
             return PartialView(lista);
         }

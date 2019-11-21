@@ -4,11 +4,11 @@
     ViewData["Title"] = "näytä";
 }
 
-<h1>Kaikki WC:t:</h1>
+<h1>Kaikki vessat</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<p>
+   
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -58,9 +58,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.WcId)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nimi)
             </td>
@@ -72,7 +72,25 @@
             </td>
            
             <td>
-                @Html.DisplayFor(modelItem => item.Unisex)
+                <dd class="col-sm-10">
+                  
+
+                    @if (item.Unisex == null)
+                    {
+                        <text>Ei tiedossa.</text>
+                    }
+                    else if (item.Unisex == true)
+                    {
+                        <input type="radio" checked="checked" disabled="disabled"><text>Kyllä</text>
+                        <input type="radio" disabled="disabled"><text>Ei</text>
+                    }
+                    else
+                    {
+                        <input type="radio" disabled="disabled"><text>Kyllä</text>
+                        <input type="radio" checked="checked" disabled="disabled"><text>Ei</text>
+                    }
+                </dd>
+
             </td>
             @*<td>
                 @Html.DisplayFor(modelItem => item.Saavutettava)
