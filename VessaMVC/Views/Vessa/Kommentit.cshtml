@@ -1,0 +1,62 @@
+﻿@model IEnumerable<VessaMVC.Models.Kommentit>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.KommenttiId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lisätty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Arvio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sisältö)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WcId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.KäyttäjäId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KommenttiId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lisätty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Arvio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sisältö)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WcId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KäyttäjäId)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
