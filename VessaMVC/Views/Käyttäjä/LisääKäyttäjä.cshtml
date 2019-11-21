@@ -1,0 +1,46 @@
+﻿@model VessaMVC.Models.Käyttäjät
+
+@{
+    ViewData["Title"] = "LisääKäyttäjä";
+}
+
+<h1>Tilin luonti</h1>
+
+@using (Html.BeginForm("LisääKäyttäjä", "Käyttäjä", FormMethod.Post))
+
+{
+
+<h4>Luo uusi tili</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LisääKäyttäjä">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Nimimerkki" class="control-label"></label>
+                <input asp-for="Nimimerkki" class="form-control" />
+                <span asp-validation-for="Nimimerkki" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salasana" class="control-label"></label>
+                <input asp-for="Salasana" class="form-control" />
+                <span asp-validation-for="Salasana" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sähköposti" class="control-label"></label>
+                <input asp-for="Sähköposti" class="form-control" />
+                <span asp-validation-for="Sähköposti" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

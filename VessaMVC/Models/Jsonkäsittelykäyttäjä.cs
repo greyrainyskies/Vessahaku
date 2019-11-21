@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace VessaMVC.Models
 {
-    public class Jsonkäsittely
+    public class Jsonkäsittelykäyttäjä
     {
-        const string url ="https://localhost:44330/api/vessa/";
-        public string Jsonhommat(string nimi = null, int id = -1, string urlinloppu=null)
+        const string url ="https://localhost:44330/api/käyttäjä/";
+        public string Jsonhommatkäyttäjä(string nimi = null, int id = -1, string urlinloppu=null)
         {
             
             string json = "";
