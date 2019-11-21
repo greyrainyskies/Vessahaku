@@ -13,7 +13,7 @@ namespace VessaMVC.Models
     public class Jsonkäsittely
     {
         const string url ="https://localhost:44330/api/vessa/";
-        public string Jsonhommat(string nimi = null, int id = -1, string urlinloppu="")
+        public string Jsonhommat(string nimi = null, int id = -1, string urlinloppu=null)
         {
             
             string json = "";
