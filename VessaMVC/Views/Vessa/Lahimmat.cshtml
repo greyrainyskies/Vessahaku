@@ -18,7 +18,7 @@
         <input type="button" class="btn btn-primary mx-2 mt-3 m-md-2 m-lg-2 m-xl-2 col-sm-auto col-md-1 col-lg-1 col-xl-1" id="paivita" value="Päivitä" onclick="HaeLista();" />
     </div>
 </div>
-<div id="lista" class="mt-4"><h2>Ladataan tietoja sijaintisi perusteella...</h2></div>
+<div id="lista" class="mt-4"><h2>Ladataan lähimpiä vessoja sijaintisi perusteella...</h2></div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var coords;
@@ -63,8 +63,7 @@
     }
 
     function PaikannusEpäonnistui() {
-        console.log("Paikannus ei onnistunut.");
-        $('#lista').html("<h2>Hups, paikannus epäonnistui.</h2>");
+        $("#lista").html("<h2>Paikannus epäonnistui. Kokeile kytkeä sijainnin näyttäminen päälle.</h2>")
     }
 
     $(function () {
