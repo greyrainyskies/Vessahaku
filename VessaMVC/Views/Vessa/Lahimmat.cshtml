@@ -2,12 +2,36 @@
 @{
     ViewData["Title"] = "Lähimmät vessat";
 }
-<div class="form-row mb-4 mt-4">
-    <div class="col-form-label">Osoite tai paikka:</div>
-    <input type="text" id="paikka" class="form-control col-3 mx-2" />
-    <input type="button" class="btn btn-primary mx-2" id="hae" value="Hae" onclick="HaeLista();" />
+<div class="form-row mt-4 mb-1">
+    <input type="text" id="paikka" class="form-control col-xl-3 col-lg-3 col-sm-auto col-md-3 m-2" placeholder="Osoite tai paikka" />
+    <input type="button" class="btn btn-primary m-2 col-sm-auto col-md-1 col-lg-1 col-xl-1" id="hae" value="Hae" onclick="HaeLista();" />
+    <a class="btn btn-outline-primary m-2 col-sm-auto col-md-1 col-lg-1 col-xl-1" data-toggle="collapse" href="#rajaukset">Rajaukset</a>
 </div>
-<div id="lista"></div>
+@*<p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Link with href
+    </a>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Button with data-target
+    </button>
+</p>
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+    </div>
+</div>*@
+<div class="collapse" id="rajaukset">
+    <div class="form-row">
+        <div class="col-form-label mx-1 my-md-2 my-lg-2 my-xl-2">Hakutuloksia:</div>
+        <input type="number" id="maara" class="form-control col-sm-1 col-md-1 col-lg-1 col-xl-1 mx-2 m-md-2 m-lg-2 m-xl-2" value="10" step="5" />
+        <div class="col-form-label mx-1 my-md-2 my-lg-2 my-xl-2">Postinumeroalue:</div>
+        <input type="text" id="postinumero" class="form-control col-sm-auto col-md-2 col-lg-2 col-xl-2 mx-2 m-md-2 m-lg-2 m-xl-2" />
+        <div class="col-form-label mx-1 my-md-2 my-lg-2 my-xl-2">Kaupunki:</div>
+        <input type="text" id="kaupunki" class="form-control col-sm-auto col-md-3 col-lg-3 col-xl-3 mx-2 m-md-2 m-lg-2 m-xl-2" />
+        <input type="button" class="btn btn-primary mx-2 mt-3 m-md-2 m-lg-2 m-xl-2 col-sm-auto col-md-1 col-lg-1 col-xl-1" id="paivita" value="Päivitä" onclick="HaeLista();" />
+    </div>
+</div>
+<div id="lista" class="mt-4"></div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     var coords;
