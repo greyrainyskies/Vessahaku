@@ -111,7 +111,7 @@ namespace VessaMVC.Controllers
         }
         public ActionResult LisaaKommenttia(int id)
         {
-            ViewBag.id = id;
+            ViewBag.Id = id;
             return View();
             
         }
