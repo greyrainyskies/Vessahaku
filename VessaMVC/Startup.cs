@@ -52,7 +52,7 @@ namespace VessaMVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Vessa}/{action=Lahimmat}/{id?}");
             });
         }
     }

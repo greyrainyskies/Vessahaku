@@ -4,27 +4,24 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Muokkaa vessaa</h1>
 
-<h4>Wct</h4>
-<hr />
+
+
 @using (Html.BeginForm("Edit", "Vessa", FormMethod.Post))
 {
 
+    <hr />
     <div class="row">
         <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="WcId" value="@Model.WcId"/>
+            <input type="hidden" name="WcId" value="@Model.WcId" />
             <div class="form-group">
                 <label asp-for="Nimi" class="control-label"></label>
                 <input asp-for="Nimi" class="form-control" />
                 <span asp-validation-for="Nimi" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Kaupunki" class="control-label"></label>
-                <input asp-for="Kaupunki" class="form-control" />
-                <span asp-validation-for="Kaupunki" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Katuosoite" class="control-label"></label>
                 <input asp-for="Katuosoite" class="form-control" />
@@ -36,19 +33,29 @@
                 <span asp-validation-for="Postinro" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Kaupunki" class="control-label"></label>
+                <input asp-for="Kaupunki" class="form-control" />
+                <span asp-validation-for="Kaupunki" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Unisex" class="control-label"></label>
-                <input asp-for="Unisex" class="form-control" />
+                @Html.RadioButtonFor(m => m.Unisex, true) Kyllä
+                @Html.RadioButtonFor(m => m.Unisex, false) Ei
                 <span asp-validation-for="Unisex" class="text-danger"></span>
+                <br />
             </div>
             <div class="form-group">
                 <label asp-for="Saavutettava" class="control-label"></label>
-                <input asp-for="Saavutettava" class="form-control" />
+                @Html.RadioButtonFor(m => m.Saavutettava, true) Kyllä
+                @Html.RadioButtonFor(m => m.Saavutettava, false) Ei
                 <span asp-validation-for="Saavutettava" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Ilmainen" /> @Html.DisplayNameFor(model => model.Ilmainen)
-                </label>
+            <div class="form-group">
+                <label asp-for="Ilmainen" class="control-label"></label>
+                @Html.RadioButtonFor(m => m.Ilmainen, true) Kyllä
+                @Html.RadioButtonFor(m => m.Ilmainen, false) Ei
+                <span asp-validation-for="Ilmainen" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Aukioloajat" class="control-label"></label>
@@ -65,30 +72,30 @@
                 <input asp-for="Ohjeet" class="form-control" />
                 <span asp-validation-for="Ohjeet" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+                    <label asp-for="Lisätty" class="control-label"></label>
+                    <input asp-for="Lisätty" class="form-control" />
+                    <span asp-validation-for="Lisätty" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Muokattu" class="control-label"></label>
+                    <input asp-for="Muokattu" class="form-control" />
+                    <span asp-validation-for="Muokattu" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="KäyttäjäId" class="control-label"></label>
+                    <input asp-for="KäyttäjäId" class="form-control" />
+                    <span asp-validation-for="KäyttäjäId" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
-                <label asp-for="Lisätty" class="control-label"></label>
-                <input asp-for="Lisätty" class="form-control" />
-                <span asp-validation-for="Lisätty" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Muokattu" class="control-label"></label>
-                <input asp-for="Muokattu" class="form-control" />
-                <span asp-validation-for="Muokattu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KäyttäjäId" class="control-label"></label>
-                <input asp-for="KäyttäjäId" class="form-control" />
-                <span asp-validation-for="KäyttäjäId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="Put" value="Save" class="btn btn-primary" />
+                <input type="submit" name="Put" value="Tallenna" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    <input type="button" value="Takasin" onclick="window.history.back()" />
+    <input type="button" value="Takaisin" class="btn btn-primary onclick="window.history.back()" />
 </div>
 
 @section Scripts {
