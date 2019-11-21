@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel;
 
 namespace VessaMVC.Models
 {
@@ -12,7 +12,9 @@ namespace VessaMVC.Models
         public string Nimi { get; set; }
         public string Kaupunki { get; set; }
         public string Katuosoite { get; set; }
+        [DisplayName("Postinumero")]
         public string Postinro { get; set; }
+
         public bool? Unisex { get; set; }
         public bool? Saavutettava { get; set; }
         public bool Ilmainen { get; set; }
@@ -22,7 +24,9 @@ namespace VessaMVC.Models
         public DateTime Lisätty { get; set; }
         public DateTime? Muokattu { get; set; }
         public int? KäyttäjäId { get; set; }
-       
 
+        public decimal Lat { get; set; }
+
+        public decimal Long { get; set; }
     }
 }

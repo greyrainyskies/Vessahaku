@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Newtonsoft.Json;
 using VessaMVC.Models;
 
@@ -36,6 +37,30 @@ namespace VessaMVC.Controllers
             return View(wc);
         }
 
+        public ActionResult Lahimmat()
+        {
+            return View();
+        }
+
+        public ActionResult LahimmatLista(decimal? lat, decimal? lon, string paikka, int? maara, string postinumero, string kaupunki)
+        {
+            List<Wct> lista = new List<Wct>();
+            if (!string.IsNullOrWhiteSpace(paikka))
+            {
+                lista = j.Lahimmat(paikka, maara, postinumero, kaupunki);
+                ViewBag.Paikka = paikka.Trim().Substring(0, 1).ToUpper() + paikka.Trim().Substring(1);
+            }
+            else if (lat != null && lon != null)
+            {
+                lista = j.Lahimmat(lat.GetValueOrDefault(), lon.GetValueOrDefault(), maara, postinumero, kaupunki);
+            }
+            else
+            {
+                lista = JsonConvert.DeserializeObject<List<Wct>>(j.Jsonhommat());
+            }
+            return PartialView(lista);
+        }
+
         // GET: Vessa/Create
         public ActionResult LisaaWc()
         {
@@ -59,7 +84,8 @@ namespace VessaMVC.Controllers
                 var response = client.PostAsync(url, content).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
+                    var luotu = JsonConvert.DeserializeObject<Wct>(response.Content.ReadAsStringAsync().Result);
+                    return RedirectToAction("Details", new {id=luotu.WcId });
                 }
                 else
                 {
@@ -124,7 +150,9 @@ namespace VessaMVC.Controllers
                 
                 if(response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Details", wc.WcId);
+
+                    return RedirectToAction("Details", new {id=id });
+
                 }
                 else
                 {
@@ -133,27 +161,6 @@ namespace VessaMVC.Controllers
                 }
             }
         }
-        // GET: Vessa/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Vessa/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
     }
 }

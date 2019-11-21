@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace VessaMVC.Models
 {
@@ -36,6 +39,55 @@ namespace VessaMVC.Models
                 return json = response.Content.ReadAsStringAsync().Result;
 
                 }
+            }
+        }
+
+        public List<Wct> Lahimmat(decimal lat, decimal lon, int? maara, string postinumero, string kaupunki)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var kokoUrl = url + "Lahimmat/" + HttpUtility.UrlEncode(lat.ToString("G8")) + "/" + HttpUtility.UrlEncode(lon.ToString("G8")) + TeeQueryString(maara, postinumero, kaupunki);
+                var response = client.GetAsync(kokoUrl).Result;
+                var json = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<Wct>>(json);
+            }
+        }
+
+        public List<Wct> Lahimmat(string paikka, int? maara, string postinumero, string kaupunki)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var kokoUrl = url + "Lahimmat/" + paikka + TeeQueryString(maara, postinumero, kaupunki);
+                var response = client.GetAsync(kokoUrl).Result;
+                var json = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<List<Wct>>(json);
+            }
+        }
+
+        private string TeeQueryString(int? maara, string postinumero, string kaupunki)
+        {
+            var parametrit = new List<string>();
+            if (maara.GetValueOrDefault() > 0)
+            {
+                parametrit.Add("maara=" + maara.ToString());
+            }
+            if (!string.IsNullOrWhiteSpace(postinumero))
+            {
+                parametrit.Add("postinumero=" + postinumero);
+            }
+            if (!string.IsNullOrWhiteSpace(kaupunki))
+            {
+                parametrit.Add("kaupunki=" + kaupunki);
+            }
+            if (parametrit.Count > 0)
+            {
+                return "?" + string.Join('&', parametrit);
+            }
+            else
+            {
+                return "";
             }
         }
     }
