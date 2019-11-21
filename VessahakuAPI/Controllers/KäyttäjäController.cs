@@ -56,7 +56,7 @@ namespace VessahakuAPI.Controllers
         {
             return db.Käyttäjät.Find(id);
         }
-        [HttpPost]
+        [HttpPost("LisääKäyttäjä", Name = "LisääKäyttäjä")]
         public IActionResult LisääKäyttäjä([FromBody] Käyttäjät käyttäjä )
         {
             try
@@ -69,7 +69,7 @@ namespace VessahakuAPI.Controllers
 
                 db.Käyttäjät.Add(uusi);
                 db.SaveChanges();
-                return CreatedAtAction("KTiedot", "Käyttäjä", new { id = uusi.KäyttäjäId }, uusi);
+                return Ok();
             }
             catch (Exception e)
             {
