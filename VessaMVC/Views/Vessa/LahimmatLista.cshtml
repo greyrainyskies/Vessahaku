@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<VessaMVC.Models.Wct>
 <h2 class="mb-3">
-    @if (ViewBag.Paikka != null)
+    @if (ViewBag.Paikka)
     {
-        <text>Lähimmät vessat kohteesta @ViewBag.Paikka </text>
+        <text>Lähimmät vessat kohteesta </text>
     }
     else
     {
@@ -10,7 +10,7 @@
     }
     @if (ViewBag.Osoite != null)
     {
-        <text>osoitteessa @ViewBag.Osoite</text>
+        @ViewBag.Osoite
     }
 </h2>
 <div class="table-responsive-sm table-responsive-md table-responsive-lg col-xl-8 p-0">
