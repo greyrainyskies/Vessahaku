@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VessahakuAPI.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace VessaMVC.Controllers
 {
@@ -22,23 +16,23 @@ namespace VessaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(Käyttäjät objUser)
         {
-            Käyttäjät käyttäjät = new Käyttäjät();
+            var käyttäjänimi = objUser.Nimimerkki;
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
 
-                    var obj = käyttäjät.Nimimerkki.Where(a => a.Equals(objUser.Nimimerkki) && a.Equals(objUser.Salasana)).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        HttpContext.Session.SetInt32("KäyttäjäId", objUser.KäyttäjäId);
-                        HttpContext.Session.SetString("Nimimerkki", objUser.Nimimerkki);
-                   string käyttäjänimi = HttpContext.Session.GetString("Nimimerkki");
-                    ViewBag.Nimimerkki = käyttäjänimi;
-                    return RedirectToAction("UserDashBoard");
-                    }
+            //        var obj = käyttäjät.Nimimerkki.Where(a => a.Equals(objUser.Nimimerkki) && a.Equals(objUser.Salasana)).FirstOrDefault();
+            //        if (obj != null)
+            //        {
+            //            HttpContext.Session.SetInt32("KäyttäjäId", objUser.KäyttäjäId);
+            //            HttpContext.Session.SetString("Nimimerkki", objUser.Nimimerkki);
+            //       string käyttäjänimi = HttpContext.Session.GetString("Nimimerkki");
+            ViewBag.Nimimerkki = käyttäjänimi;
+                    return View("UserDashBoard");
+            //        }
                 
-            }
-            return View(objUser);
+            //}
+            //return View(objUser);
         }
 
         public ActionResult UserDashBoard()
