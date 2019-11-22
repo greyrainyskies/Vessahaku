@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<VessaMVC.Models.Käyttäjät>
 
 @{
-    ViewData["Title"] = "TulostaKäyttäjät";
+    ViewData["Title"] = "Käyttäjät";
 }
 
-<h1>TulostaKäyttäjät</h1>
+<h1>Käyttäjät</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -18,9 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nimimerkki)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Salasana)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Sähköposti)
             </th>
@@ -36,9 +33,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nimimerkki)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Salasana)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Sähköposti)
             </td>

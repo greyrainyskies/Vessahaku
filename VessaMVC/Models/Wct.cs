@@ -19,6 +19,8 @@ namespace VessaMVC.Models
         public bool? Saavutettava { get; set; }
         public bool Ilmainen { get; set; }
         public string Aukioloajat { get; set; }
+        [DisplayName("Ovenavauskoodi")]
+
         public string Koodi { get; set; }
         public string Ohjeet { get; set; }
         public DateTime Lisätty { get; set; }

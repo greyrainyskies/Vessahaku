@@ -3,11 +3,11 @@
     ViewData["Title"] = "Login";
 }
 
-<@using (Html.BeginForm("Login", "Login", FormMethod.Post))  
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))  
 {  
 <fieldset>  
-<legend>Kirjaudu sisään</legend>  
-  
+<h1>Kirjaudu sisään</h1>  
+<hr />
 @Html.AntiForgeryToken()  
 @Html.ValidationSummary(true)  
 @if (@ViewBag.Message != null)  
@@ -19,7 +19,7 @@
 <table>  
 <tr>  
 <td>@Html.LabelFor(a => a.Nimimerkki)</td>  
-<td>@Html.TextBoxFor(a => a.Nimimerkki)</td>  
+<td>@Html.TextBoxFor(a => a.Nimimerkki, new { @class = "form-control m-1" })</td>  
 <td>@Html.ValidationMessageFor(a => a.Nimimerkki)</td>  
 </tr>  
 <tr>  
@@ -27,7 +27,7 @@
 @Html.LabelFor(a => a.Salasana)  
 </td>  
 <td>  
-@Html.PasswordFor(a => a.Salasana)  
+@Html.PasswordFor(a => a.Salasana, new { @class = "form-control m-1" })  
 </td>  
 <td>  
 @Html.ValidationMessageFor(a => a.Salasana)  
@@ -36,7 +36,7 @@
 <tr>  
 <td></td>  
 <td>  
-<input type="submit" value="Login" />  
+<input type="submit" value="Kirjaudu" class="btn btn-primary m-1"/>  
 </td>  
 <td></td>  
 </tr>  
